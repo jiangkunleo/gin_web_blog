@@ -1,0 +1,90 @@
+{{ define "login/login.html" }}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title>个人博客后台登录</title>
+    <link rel="stylesheet" href="/static/css/pintuer.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/pintuer.js"></script>
+    <script src="/static/js/respond.js"></script>
+    <script src="/static/js/admin.js"></script>
+
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon" />
+    <link href="/favicon.ico" rel="bookmark icon" />
+</head>
+
+<body>
+<div class="container">
+    <div class="line">
+        <div class="xs6 xm4 xs3-move xm4-move">
+            <br /><br />
+            <div class="media media-y">
+                <a href="#" target="_blank"><img src="/static/images/logo.png" class="radius" alt="后台管理系统" /></a>
+            </div>
+            <br /><br />
+            <form   onsubmit="return false">
+            <div class="panel">
+                <div class="panel-head"><strong>登录个人博客后台管理系统</strong></div>
+                <div class="panel-body" style="padding:30px;">
+                    <div class="form-group">
+                        <div class="field field-icon-right">
+                            <input type="text" class="input" name="username" id="username" placeholder="登录账号"  />
+                            <span class="icon icon-user"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="field field-icon-right">
+                            <input type="password" class="input" name="password" id="password" placeholder="登录密码"  />
+                            <span class="icon icon-key"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="field">
+                            <input type="text" class="input" name="passcode" id="passcode" placeholder="填写右侧的验证码"  />
+<!--                            <img src="/static/images/passcode.jpg" width="80" height="32" class="passcode" />-->
+                            <img src="/login/captcha" onclick="this.src='/login/captcha?v='+Math.random()" class="passcode" />
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-foot text-center"><button class="button button-block bg-main text-big" id="sub">立即登录后台</button></div>
+            </div>
+            <p class="text-right text-gray">基于<a class="text-gray" target="_blank" href="#">MVC框架</a>构建</p>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/static/layui/layui.js"></script>
+<script>
+    $(function (){
+        $("#sub").on("click",function(){
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var passcode = $("#passcode").val();
+            var data = {"username":username,"password":password,"passcode":passcode};
+            $.post(
+                "/login/toLogin",
+                data,
+                function(a){
+                    if(a.code == 0) {
+                        if (a.error) {
+                           layer.msg(a.error)
+                        }
+
+                    }else{
+                        window.location.href = "http://127.0.0.1:8080/admin/index"
+                    }
+                },
+                "json");
+
+        })
+    });
+</script>
+</body>
+</html>
+{{ end }}
