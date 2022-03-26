@@ -15,7 +15,11 @@ func IsLogin() gin.HandlerFunc {
 			return
 		}
 		isLogin := session.Values["is_login"]
-
+		username := session.Values["user_name"]
+		if username == "" || username == nil {
+			c.Redirect(http.StatusTemporaryRedirect ,"/login/showLogin")
+			return
+		}
 		if isLogin == false {
 			c.Redirect(http.StatusTemporaryRedirect ,"/login/showLogin")
 			return

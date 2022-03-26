@@ -1,15 +1,25 @@
 package utils
 
 import (
-	"github.com/jinzhu/gorm"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
 )
 
 var Db *gorm.DB
 
 func init() {
+	conf,_ := ParseConfig("../config/admin.json")
+	mysqlUser := conf.Database.User
+	mysqlPass := conf.Database.Password
+	mysqlHost := conf.Database.Host
+	mysqlPort := conf.Database.Port
+	mysqlDbname := conf.Database.DbName
+	mysqlChartset := conf.Database.Chartset
+	addr := mysqlUser+":"+mysqlPass+"@("+mysqlHost+":"+mysqlPort+")/"+
+		mysqlDbname+"?charset="+mysqlChartset+
+		"&parseTime=True&loc=Local"
 	var err error
-	Db, err = gorm.Open("mysql", "root:root@(119.23.175.157:3306)/blog?charset=utf8mb4&parseTime=True&loc=Local")
+	Db, err = gorm.Open("mysql", addr)
 	if err != nil {
 		panic(err)
 	}

@@ -12,6 +12,8 @@ func InitRouter(r *gin.Engine) *gin.Engine{
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
+	api := &controllers.Api{}
+	r.GET("/test",api.Test)
 
 	loginGroup := r.Group("login")
 	{

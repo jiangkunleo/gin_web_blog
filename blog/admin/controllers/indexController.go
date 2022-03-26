@@ -33,6 +33,7 @@ func (i *Index) CateIndex(c *gin.Context) {
 	var cates []model.Cate
 	Db := utils.Db
 	Db.Table("cate").Find(&cates)
+	defer Db.Close()
 	var menus []utils.Menu
 	for _,v := range cates {
 		var menu utils.Menu

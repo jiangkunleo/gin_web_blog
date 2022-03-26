@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/dchest/captcha v0.0.0-20200903113550-03f5f0333e1f // indirect
+	github.com/garyburd/redigo v1.6.3 // indirect
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/locales v0.14.0
 	github.com/go-playground/universal-translator v0.18.0
